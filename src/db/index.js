@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 const {DB_URL,DB_NAME} = process.env
+console.log(DB_NAME,DB_URL)
 
 const connectDB = async () => {
     try {
