@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
+import { DB_NAME } from "../constants.js"
 
-const {DB_URL,DB_NAME} = process.env
-console.log(DB_NAME,DB_URL)
+const {DB_URL} = process.env
 
 const connectDB = async () => {
     try {
