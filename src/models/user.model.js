@@ -50,7 +50,23 @@ userSchema.methods.generateAccessToken = async function() {
         },
         process.env.SECRET_ACCESS_TOKEN,
         {
-            expiresIn: "1h"
+            expiresIn: "60s"
+        }
+        )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+userSchema.methods.generateRefreshToken = async function() {
+    try {
+        return jwt.sign({
+            id: this._id.toString(),
+            isAdmin: this.isAdmin
+        },
+        process.env.SECRET_REFRESH_TOKEN,
+        {
+            expiresIn: "30d"
         }
         )
     } catch (error) {
