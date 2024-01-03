@@ -24,3 +24,22 @@ export const register = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {user,token:await user.generateAccessToken()}, "Registration completed Successfully"))
 })
+
+export const login = asyncHandler(async (req, res) => {
+
+    const {email, password} = req.body
+
+    const userExists = await User.findOne({ email })
+
+    if (!userExists) {
+        throw new ApiError(401, "email or password is wrong")
+    }
+
+    
+
+    return res
+    .status(200)
+    .json({
+        msg: "Login Successful"
+    })
+})

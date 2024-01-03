@@ -1,7 +1,7 @@
 # crud-auth-product
 A Product CRUD Application with User Authentication 
 
-Register a user []
+Register a user [+]
 Login a user []
 Who am I []
 Add new product []
