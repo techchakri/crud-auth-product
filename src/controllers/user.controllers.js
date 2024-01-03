@@ -19,10 +19,12 @@ export const register = asyncHandler(async (req, res) => {
         phone,
         password
     })
+    
+    const userCreated = await User.findOne({_id:user._id}).select("-password")
 
     return res
     .status(200)
-    .json(new ApiResponse(200, {user,token:await user.generateAccessToken()}, "Registration completed Successfully"))
+    .json(new ApiResponse(200, {user:userCreated, token:await user.generateAccessToken()}, "Registration completed Successfully"))
 })
 
 export const login = asyncHandler(async (req, res) => {
@@ -35,11 +37,20 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(401, "email or password is wrong")
     }
 
-    
+    const isPassword = await userExists.isPasswordCorrect(password)
+
+    if (!isPassword) {
+        throw new ApiError(401, "password is wrong")
+    }
+
+    const user = await User.findOne({ _id:userExists._id }).select("-password")
 
     return res
     .status(200)
-    .json({
-        msg: "Login Successful"
-    })
+    .json(new ApiResponse(200, {user, token: await userExists.generateAccessToken()}, "Login Successful"))
+})
+
+export const me = asyncHandler(async (req, res) => {
+    const user = await User.findOne({ _id: req.user.id })
+    
 })
